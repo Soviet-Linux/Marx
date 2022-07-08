@@ -6,7 +6,7 @@
   </a>
 </p>
 
-> A CLI utility to browser the internet from the commandline
+> A CLI utility to browse the internet from the Command-line
 
 ### 🏠 [Homepage](https://github.com/TheHolyTachanka/Duck-CLI)
 
