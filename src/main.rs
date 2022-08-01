@@ -66,7 +66,7 @@ fn parse_html(html: &str, selector: &str) -> Vec<String> {
 }
 
 fn call_cccp(pkg: String) -> Result<String, reqwest::Error> {
-    match Command::new("sudo").args(&["cccp", "aur", &pkg]).status() {
+    match Command::new("sudo").args(&["cccp", "--aur", &pkg]).status() {
         Ok(_) => exit(0),
         Err(_) => exit(1)
     }
