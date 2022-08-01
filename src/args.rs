@@ -9,7 +9,7 @@ pub enum Action {
 
     /// Unninstalls a package(NOT INPLEMENTED)
     Unninstall(RemovePackage),
-
+    /// Runs the TUI prompt
     Tui,
 }
 
