@@ -4,7 +4,7 @@ use std::fmt::Write;
 use std::fs;
 use std::fs::File;
 use std::path::Path;
-
+use std::process::{exit, Command};
 use scraper::Html;
 extern crate open;
 
@@ -40,30 +40,7 @@ fn main() {
             .replace("\n", "")
             .trim();
 
-    let PKGBUILD = download_pkgbuild(url_vec[index_element].to_string());
-    eprintln!("{:#?}", &PKGBUILD.as_ref().unwrap());
-    println!(
-        "{:#?}",
-        format!(
-            "~/packages/{}/{}",
-            url_str.replace("https://aur.archlinux.org/packages/", ""),
-            "PKGBUILD"
-        )
-    );
-    write_file(
-        format!(
-            "~/packages/{}/PKGBUILD",
-            url_str.replace("https://aur.archlinux.org/packages/", "")
-        ),
-        PKGBUILD.unwrap(),
-    );
-
-    if open::that(&url_str).is_ok() {
-        println!("{}", &url_str);
-    } else if open::that(&url_str).is_err() {
-        println!("Could not open the url: {}", &url_str.to_owned());
-        panic!();
-    }
+    let _ = call_cccp(url_vec[index_element].to_string());
 }
 
 #[tokio::main]
@@ -88,31 +65,10 @@ fn parse_html(html: &str, selector: &str) -> Vec<String> {
     return title_vec;
 }
 
-fn download_pkgbuild(pkg: String) -> Result<String, reqwest::Error> {
-    return get_html(&format!(
-        "{}{}",
-        "https://aur.archlinux.org/cgit/aur.git/plain/PKGBUILD?h=", pkg
-    ));
-}
-
-fn write_file(mut path: String, data: String) {
-    use std::fs;
-    use std::fs::OpenOptions;
-    use std::io::prelude::*;
-
-    if Path::new(&path).exists() {
-        fs::remove_file(&path).unwrap();
+fn call_cccp(pkg: String) -> Result<String, reqwest::Error> {
+    match Command::new("sudo").args(&["cccp", "aur", &pkg]).status() {
+        Ok(_) => exit(0),
+        Err(_) => exit(1)
     }
 
-    File::create(&path).unwrap();
-    let mut file = OpenOptions::new()
-        .create_new(true)
-        .write(true)
-        .append(true)
-        .open(&path)
-        .unwrap();
-
-    if let Err(e) = writeln!(path, "{}", data) {
-        eprintln!("Couldn't write to file: {}", e);
-    }
 }
