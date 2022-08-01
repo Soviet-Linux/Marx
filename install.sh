@@ -1,17 +1,3 @@
-FILE=$HOME/.cargo/env
-if test -f "$FILE"; then
-    git clone https://github.com/TheHolyTachanka/Duck-CLI
-    cd Duck-CLI
-    build
-    install
-    cd ..
-    rm -rf Duck-CLI
-else
-	curl https://sh.rustup.rs -sSf | sh -s -- --profile normal --default-toolchain stable
-fi
-
-
-
 build () {
     echo '############'
     echo '##Building##'
@@ -20,9 +6,21 @@ build () {
 }
 
 install () {
-    sudo mv target/release/Duck-CLI /usr/bin/
-    sudo chmod +x /usr/bin/Duck-CLI
+    sudo mv target/release/marx /usr/bin/
+    sudo chmod +x /usr/bin/marx
     echo '##############'
     echo '##installed##'
     echo '##############'
 }
+
+FILE=$HOME/.cargo/env
+if test -f "$FILE"; then
+    git clone https://github.com/TheHolyTachanka/Marx
+    cd Marx
+    build
+    install
+    cd ..
+    rm -rf Marx
+else
+    curl https://sh.rustup.rs -sSf | sh -s -- --profile normal --default-toolchain stable
+fi
