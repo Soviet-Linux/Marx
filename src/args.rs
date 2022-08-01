@@ -1,8 +1,6 @@
 use clap::{Subcommand, Args};
-use colored::Colorize;
-use std::{fs, process::{Command}, io::{Write}, path::Path, time::Instant, collections::HashMap};
 
-use crate::{utils, tui};
+use crate::utils;
 
 #[derive(Subcommand, Debug)]
 pub enum Action {
@@ -53,9 +51,6 @@ pub struct Tui {
 
 impl Tui {
 
-    pub fn start(&self) {
-        tui();
-    }
     
 }
 

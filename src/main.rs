@@ -1,8 +1,6 @@
 use dialoguer::Input;
 use dialoguer::{theme::ColorfulTheme, Select};
-use std::process::{exit, Command};
 use scraper::Html;
-extern crate open;
 use args::Action;
 use clap::Parser;
 
@@ -57,12 +55,6 @@ fn tui() {
         .iter()
         .position(|x| x == &title_vec[selection].to_owned())
         .unwrap();
-    //println!("{}", &url_vec[index_element].replace(" ", ""));
-    let url_str = "https://aur.archlinux.org/packages/".to_owned()
-        + &url_vec[index_element]
-            .replace(" ", "")
-            .replace("\n", "")
-            .trim();
 
     let _ = utils::call_cccp_single(&url_vec[index_element]);
 }

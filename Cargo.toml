@@ -1,5 +1,5 @@
 [package]
-name = "Duck-CLI"
+name = "Marx"
 version = "0.1.0"
 edition = "2021"
 
@@ -7,10 +7,8 @@ edition = "2021"
 
 [dependencies]
 dialoguer = "0.10.1"
-reqwest = { version = "0.11", features = ["blocking"] }
+reqwest = "0.11"
 scraper = "0.12.0"
 tokio = { version = "1", features = ["full"] }
-open = "1"
-minparse = "0.1.2"
 clap = {version = "3.2.16", features = ["derive"]}
 colored = "2.0.0"
