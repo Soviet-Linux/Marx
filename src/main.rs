@@ -1,14 +1,38 @@
 use dialoguer::Input;
 use dialoguer::{theme::ColorfulTheme, Select};
-use std::fmt::Write;
-use std::fs;
-use std::fs::File;
-use std::path::Path;
 use std::process::{exit, Command};
 use scraper::Html;
 extern crate open;
+use args::Action;
+use clap::Parser;
+
+mod args;
+mod utils; 
+
+const VERSION : &str = env!("CARGO_PKG_VERSION");
+const ABOUT: &'static str = env!("CARGO_PKG_DESCRIPTION");
+const AUTHOR : &'static str = env!("CARGO_PKG_AUTHORS");
+
+/// Python Project Manager
+#[derive(Parser, Debug)]
+#[clap(author=AUTHOR, version=VERSION, about=ABOUT, long_about = None)]
+struct Cli {
+
+    #[clap(subcommand)]
+    command: Action,
+}
 
 fn main() {
+    let cli = Cli::parse();
+
+    match &cli.command {
+        Action::Install(add_pro) => add_pro.install(),
+        Action::Unninstall(rp) => rp.uninstall(),
+        Action::Tui => tui(),
+    }
+}
+
+fn tui() {
     let search_term: String = Input::with_theme(&ColorfulTheme::default())
         .with_prompt("Search term:")
         .interact_text()
@@ -40,7 +64,7 @@ fn main() {
             .replace("\n", "")
             .trim();
 
-    let _ = call_cccp(url_vec[index_element].to_string());
+    let _ = utils::call_cccp_single(&url_vec[index_element]);
 }
 
 #[tokio::main]
@@ -65,10 +89,4 @@ fn parse_html(html: &str, selector: &str) -> Vec<String> {
     return title_vec;
 }
 
-fn call_cccp(pkg: String) -> Result<String, reqwest::Error> {
-    match Command::new("sudo").args(&["cccp", "--aur", &pkg]).status() {
-        Ok(_) => exit(0),
-        Err(_) => exit(1)
-    }
 
-}
