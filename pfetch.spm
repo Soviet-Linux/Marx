@@ -1,0 +1,21 @@
+{
+    "dependencies": [],
+    "description": "A pretty system information tool written in POSIX sh.",
+    "info": {
+        "download": "curl -o PKGBUILD https://aur.archlinux.org/cgit/aur.git/plain/PKGBUILD?h=pfetch ",
+        "install": "mv pkg/pfetch/* $BUILD_ROOT",
+        "make": "cccp-makepkg",
+        "prepare": "mv ../PKGBUILD .",
+        "special": "",
+        "test": ""
+    },
+    "license": "MIT",
+    "locations": [],
+    "maintainer": "",
+    "makedependencies": [],
+    "name": "pfetch",
+    "optionaldependencies": [],
+    "type": "src",
+    "url": "https://github.com/dylanaraps/pfetch",
+    "version": "0.6.0"
+}

@@ -3,18 +3,6 @@
 version = 3
 
 [[package]]
-name = "Marx"
-version = "0.1.0"
-dependencies = [
- "clap",
- "colored",
- "dialoguer",
- "reqwest",
- "scraper",
- "tokio",
-]
-
-[[package]]
 name = "atty"
 version = "0.2.14"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -313,6 +301,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0c09fd04b7e4073ac7156a9539b57a484a8ea920f79c7c675d05d289ab6110d3"
 
 [[package]]
+name = "futures-io"
+version = "0.3.21"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "fc4045962a5a5e935ee2fdedaa4e08284547402885ab326734432bed5d12966b"
+
+[[package]]
 name = "futures-sink"
 version = "0.3.21"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -331,9 +325,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d8b7abd5d659d9b90c8cba917f6ec750a74e2dc23902ef9cd4cc8c8b22e6036a"
 dependencies = [
  "futures-core",
+ "futures-io",
  "futures-task",
+ "memchr",
  "pin-project-lite",
  "pin-utils",
+ "slab",
 ]
 
 [[package]]
@@ -610,6 +607,23 @@ dependencies = [
 ]
 
 [[package]]
+name = "marx"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "colored",
+ "dialoguer",
+ "minparse",
+ "reqwest",
+ "scraper",
+ "serde",
+ "serde_derive",
+ "serde_json",
+ "simsearch",
+ "tokio",
+]
+
+[[package]]
 name = "matches"
 version = "0.1.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -626,6 +640,12 @@ name = "mime"
 version = "0.3.16"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2a60c7ce501c71e03a9c9c0d35b861413ae925bd979cc7a4e30d060069aaac8d"
+
+[[package]]
+name = "minparse"
+version = "0.1.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "7047b77ab64b95344d4eea24918ee134d0207a36a152543bafcf0470c4398206"
 
 [[package]]
 name = "mio"
@@ -1165,9 +1185,23 @@ checksum = "a2333e6df6d6598f2b1974829f853c2b4c5f4a6e503c10af918081aa6f8564e1"
 
 [[package]]
 name = "serde"
-version = "1.0.138"
+version = "1.0.141"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1578c6245786b9d168c5447eeacfb96856573ca56c9d68fdcf394be134882a47"
+checksum = "7af873f2c95b99fcb0bd0fe622a43e29514658873c8ceba88c4cb88833a22500"
+dependencies = [
+ "serde_derive",
+]
+
+[[package]]
+name = "serde_derive"
+version = "1.0.141"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "75743a150d003dd863b51dc809bcad0d73f2102c53632f1e954e738192a3413f"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn",
+]
 
 [[package]]
 name = "serde_json"
@@ -1209,6 +1243,16 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e51e73328dc4ac0c7ccbda3a494dfa03df1de2f46018127f60c693f2648455b0"
 dependencies = [
  "libc",
+]
+
+[[package]]
+name = "simsearch"
+version = "0.2.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ec7c616f4afa8be07117e344990cc90651fbaad06055655f3d8cc4a668675398"
+dependencies = [
+ "strsim",
+ "triple_accel",
 ]
 
 [[package]]
@@ -1439,6 +1483,12 @@ checksum = "7b7358be39f2f274f322d2aaed611acc57f382e8eb1e5b48cb9ae30933495ce7"
 dependencies = [
  "once_cell",
 ]
+
+[[package]]
+name = "triple_accel"
+version = "0.3.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "622b09ce2fe2df4618636fb92176d205662f59803f39e70d1c333393082de96c"
 
 [[package]]
 name = "try-lock"
